@@ -16,6 +16,7 @@ import re
 
 
 class PretrainDataset(Dataset):
+    '''This class helps in creating the Pretrain Dataset'''
     def __init__(self, data):
         random.shuffle(data)
         self.data = data
@@ -26,6 +27,7 @@ class PretrainDataset(Dataset):
     
 
 class NLIDataset(Dataset):
+    '''This is for creating the NLI Dataset'''
     def __init__(self, data):
         random.shuffle(data)
         self.data = data
@@ -37,6 +39,7 @@ class NLIDataset(Dataset):
 
 
 def custom_collate_sman(batch):
+    '''Custom collate function for semanitc analysis task'''
     sentences = [item[0] for item in batch]
     labels = [item[1] for item in batch]
     for i , label in enumerate(labels):
@@ -54,6 +57,7 @@ def custom_collate_sman(batch):
 
 
 def custom_collate(batch):
+    '''Custom collate function for pretraining task'''
     sentences = [item[0] for item in batch]
     labels = [item[1] for item in batch]
     
@@ -66,6 +70,7 @@ def custom_collate(batch):
 
 
 def custom_collate_nli(batch):
+    ''' Custom collate function for Natural Language Inference '''
     premises, hypothesis = [item[0] for item in batch], [item[1] for item in batch]
     labels = [item[2] for item in batch]
   
@@ -78,23 +83,21 @@ def custom_collate_nli(batch):
 
 
 
-
-
-class ModelUtils():
-
-    def __init__(self,dataset_hf, batch_size, num_classes=3, sst=False, glove_embeddings=None):
-        self.dataset_hf = dataset_hf
-        self.batch_size = batch_size
-        self.num_classes = num_classes
-        self.sst = sst
-        self.stopwords_en = stopwords.words('english')
-        self.glove_embeddings = glove_embeddings
-        
-
-    def preprocess(self, stopwords ):
-        dataset = load_dataset(self.dataset_hf, "default")
-        if self.sst:
-            pass
+def preprocessing(sentence, stop_words_remove, word_2_idx, stop_words):
+    '''This function helps in preprocessing the sentence
+    Args:
+        sentence: Sentence to be preprocessed  
+        stop_words_remove: Boolean value to remove stop words or not
+    Returns:
+        sentence: Preprocessed sentence in form of list of tokens with idx values'''
+    sentence = sentence.split(' ')
+    if stop_words_remove:
+        sentence = [word.lower() for word in sentence if word.lower() not in stop_words]
+    else:
+        sentence = [word.lower() for word in sentence]
+    sentence = ['<start> '] + sentence+ ['<end>']
+    sentence = [word_2_idx[word] if word in word_2_idx else word_2_idx['<unk>'] for word in sentence]
+    return sentence
 
 
 
