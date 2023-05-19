@@ -1,8 +1,8 @@
 # ELMo-using-pytorch
 ------
 ## There are two tasks: 
-### 1. Sentiment Analysis([ SST.ipynb ]{})
-### 2. Natural Language Inference([MULTI_NLI.ipynb]{})
+### 1. Sentiment Analysis([ SST.ipynb ]{https://github.com/JainitBITW/ELMo-using-pytorch/blob/main/SST.ipynb})
+### 2. Natural Language Inference([MULTI_NLI.ipynb]{https://github.com/JainitBITW/ELMo-using-pytorch/blob/main/MULTI_NLI.ipynb})
 ------
 ## 1. Sentiment Analysis
 ### 1.1. Data
